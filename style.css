@@ -107,3 +107,20 @@ small {
   color: #777;
   text-align: right;
 }
+
+#task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.delete-btn {
+  margin-top: 0;
+  padding: 6px 12px;
+  background: #e74c3c;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+}

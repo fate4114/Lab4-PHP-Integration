@@ -5,6 +5,21 @@ $_SESSION['tasks'] = $_SESSION['tasks'] ?? [];
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // DELETE
+    if (isset($_POST['delete_index'])) {
+        $index = $_POST['delete_index'];
+
+        if (ctype_digit($index) && isset($_SESSION['tasks'][(int)$index])) {
+            unset($_SESSION['tasks'][(int)$index]);
+            $_SESSION['tasks'] = array_values($_SESSION['tasks']); // re-number the list
+        }
+
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
+    // CREATE
     $taskName = trim($_POST['task_name'] ?? '');
     $taskDescription = trim($_POST['task_description'] ?? '');
 
@@ -59,10 +74,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <section>
       <ul id="task-list">
-        <?php foreach ($_SESSION['tasks'] as $task): ?>
-          <li>
-            <strong><?= htmlspecialchars($task[0], ENT_QUOTES, 'UTF-8') ?></strong>:
-            <?= htmlspecialchars($task[1], ENT_QUOTES, 'UTF-8') ?>
+        <?php foreach ($_SESSION['tasks'] as $i => $task): ?>
+          <li class="task-item">
+            <span>
+              <strong><?= htmlspecialchars($task[0], ENT_QUOTES, 'UTF-8') ?></strong>:
+              <?= htmlspecialchars($task[1], ENT_QUOTES, 'UTF-8') ?>
+            </span>
+            <form method="POST" class="delete-form">
+              <input type="hidden" name="delete_index" value="<?= $i ?>">
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
           </li>
         <?php endforeach; ?>
       </ul>
