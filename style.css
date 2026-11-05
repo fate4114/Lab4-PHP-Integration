@@ -102,3 +102,8 @@ button:hover {
     padding: 14px;
   }
 }
+
+small {
+  color: #777;
+  text-align: right;
+}
