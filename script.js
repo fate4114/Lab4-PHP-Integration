@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 2. Live character counter on the description input
   var desc = document.getElementById("task_description");
   var counter = document.createElement("small");
-  counter.textContent = "0 / 255";
+  counter.textContent = desc.value.length + " / 255";
   desc.insertAdjacentElement("afterend", counter);
 
   desc.addEventListener("input", function () {
