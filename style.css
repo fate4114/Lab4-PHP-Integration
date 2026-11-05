@@ -55,7 +55,15 @@ header h1 {
 }
 
 header h1::before {
-  content: "✓ ";
+  content: "🐱 ";
+}
+
+header::after {
+  content: "Get things done, one task at a time";
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 section {
@@ -106,7 +114,7 @@ small {
 button {
   margin-top: 10px;
   padding: 12px;
-  background: var(--primary);
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -114,11 +122,10 @@ button {
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  transition: transform 0.1s, box-shadow 0.2s;
 }
 
 button:hover {
-  background: var(--primary-dark);
   box-shadow: 0 6px 14px rgba(108, 92, 231, 0.35);
 }
 
@@ -151,6 +158,18 @@ button:active {
 }
 
 /* ===== Task list ===== */
+.list-title {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 20px 0;
+}
+
 #task-list {
   list-style: none;
   display: flex;
@@ -175,6 +194,11 @@ button:active {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(108, 92, 231, 0.15);
 }
+
+#task-list li:nth-child(4n+1) { border-left-color: #6c5ce7; }
+#task-list li:nth-child(4n+2) { border-left-color: #00b894; }
+#task-list li:nth-child(4n+3) { border-left-color: #fdcb6e; }
+#task-list li:nth-child(4n+4) { border-left-color: #ff7675; }
 
 #task-list li span {
   word-break: break-word;
@@ -202,22 +226,6 @@ button:active {
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 600;
-
-  /* ===== Fix action buttons ===== */
-.actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.edit-btn,
-.delete-btn {
-  margin: 0;
-  padding: 7px 14px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
   line-height: 1.4;
   text-decoration: none;
   border: none;
@@ -225,54 +233,54 @@ button:active {
 }
 
 .edit-btn {
-  background: #feca57;
+  background: var(--warning);
   color: #5b4a00;
 }
 
 .edit-btn:hover {
-  background: #f0b93a;
+  background: var(--warning-dark);
 }
 
 .delete-btn {
-  background: #ff6b6b;
+  background: var(--danger);
   color: #fff;
 }
 
 .delete-btn:hover {
-  background: #e55656;
+  background: var(--danger-dark);
   box-shadow: none;
 }
 
-/* ===== Extra polish ===== */
-header h1::before {
-  content: "🐱 ";
-}
+/* ===== Mobile ===== */
+@media (max-width: 480px) {
+  header {
+    padding-top: 32px;
+  }
 
-header::after {
-  content: "Get things done, one task at a time";
-  display: block;
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
+  header h1 {
+    font-size: 1.6rem;
+  }
 
-.list-title {
-  font-size: 1.1rem;
-  margin-bottom: 14px;
-  color: var(--text);
-}
+  section {
+    padding: 16px;
+  }
 
-.empty {
-  text-align: center;
-  color: var(--muted);
-  padding: 20px 0;
-}
+  #task-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-#task-list li:nth-child(4n+1) { border-left-color: #6c5ce7; }
-#task-list li:nth-child(4n+2) { border-left-color: #00b894; }
-#task-list li:nth-child(4n+3) { border-left-color: #fdcb6e; }
-#task-list li:nth-child(4n+4) { border-left-color: #ff7675; }
+  .actions {
+    width: 100%;
+  }
 
-button[type="submit"]:not(.delete-btn) {
-  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  .edit-btn,
+  .delete-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .delete-form {
+    flex: 1;
+  }
 }
