@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>My To-Do List</h1>
+  </header>
+
+  <main>
+    <section>
+      <form method="POST">
+        <label for="task_name">Task Name:</label>
+        <input type="text" id="task_name" name="task_name" required>
+
+        <label for="task_description">Task Description:</label>
+        <input type="text" id="task_description" name="task_description" required>
+
+        <button type="submit" name="submit">Add Task</button>
+      </form>
+    </section>
+
+    <section>
+      <ul id="task-list">
+        <!-- backend will put the foreach loop here -->
+      </ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
