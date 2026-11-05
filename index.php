@@ -129,24 +129,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </section>
     
     <section>
-      <ul id="task-list">
-        <?php foreach ($_SESSION['tasks'] as $i => $task): ?>
-          <li class="task-item">
-            <span>
-              <strong><?= htmlspecialchars($task[0], ENT_QUOTES, 'UTF-8') ?></strong>:
-              <?= htmlspecialchars($task[1], ENT_QUOTES, 'UTF-8') ?>
-            </span>
-            <div class="actions">
-              <a href="?edit=<?= $i ?>" class="edit-btn">Edit</a>
-              <form method="POST" class="delete-form">
-                <input type="hidden" name="delete_index" value="<?= $i ?>">
-                <button type="submit" class="delete-btn">Delete</button>
-              </form>
-            </div>
-          </li>
-        <?php endforeach; ?>
-      </ul>
-    </section>
+  <h2 class="list-title">Your Tasks (<?= count($_SESSION['tasks']) ?>)</h2>
+
+  <?php if (empty($_SESSION['tasks'])): ?>
+    <p class="empty">No tasks yet. Add your first one! 🐱</p>
+  <?php endif; ?>
+
+  <ul id="task-list">
+    <?php foreach ($_SESSION['tasks'] as $i => $task): ?>
+      <li class="task-item">
+        <span>
+          <strong><?= htmlspecialchars($task[0], ENT_QUOTES, 'UTF-8') ?></strong>
+          <?= htmlspecialchars($task[1], ENT_QUOTES, 'UTF-8') ?>
+        </span>
+        <div class="actions">
+          <a href="?edit=<?= $i ?>" class="edit-btn">Edit</a>
+          <form method="POST" class="delete-form">
+            <input type="hidden" name="delete_index" value="<?= $i ?>">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+</section>
   </main>
 
   <script src="script.js"></script>

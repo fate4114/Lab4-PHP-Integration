@@ -1,4 +1,21 @@
-/* 1. Base styles */
+/* ===== Variables ===== */
+:root {
+  --primary: #6c5ce7;
+  --primary-dark: #5a4bd1;
+  --bg: #f3f2fb;
+  --card: #ffffff;
+  --text: #2d3436;
+  --muted: #8a8fa3;
+  --border: #e6e4f5;
+  --danger: #ff6b6b;
+  --danger-dark: #e55656;
+  --warning: #feca57;
+  --warning-dark: #f0b93a;
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(108, 92, 231, 0.12);
+}
+
+/* ===== Base ===== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,35 +23,50 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  color: #222;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  background: linear-gradient(180deg, #e9e6fb 0%, var(--bg) 280px);
+  background-repeat: no-repeat;
+  background-color: var(--bg);
+  color: var(--text);
   line-height: 1.5;
+  min-height: 100vh;
+  padding-bottom: 40px;
 }
 
-/* 2. Centered container */
+/* ===== Layout ===== */
 header,
 main {
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 0 16px;
 }
 
 header {
-  padding-top: 32px;
-  padding-bottom: 16px;
+  padding-top: 48px;
+  padding-bottom: 24px;
   text-align: center;
 }
 
-section {
-  background: #fff;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--primary);
 }
 
-/* 3. Form */
+header h1::before {
+  content: "✓ ";
+}
+
+section {
+  background: var(--card);
+  padding: 24px;
+  margin-bottom: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ===== Form ===== */
 form {
   display: flex;
   flex-direction: column;
@@ -42,70 +74,88 @@ form {
 }
 
 label {
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-top: 4px;
 }
 
 input[type="text"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
   font-size: 1rem;
+  font-family: inherit;
+  background: #fafaff;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 input[type="text"]:focus {
   outline: none;
-  border-color: #4a90e2;
-}
-
-button {
-  margin-top: 8px;
-  padding: 10px;
-  background: #4a90e2;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #357abd;
-}
-
-/* 4. Task list */
-#task-list {
-  list-style: none;
-}
-
-#task-list li {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-}
-
-#task-list li:last-child {
-  border-bottom: none;
-}
-
-/* Error messages (backend will use this) */
-.error {
-  color: red;
-  margin-bottom: 8px;
-}
-
-/* 5. Mobile */
-@media (max-width: 480px) {
-  header h1 {
-    font-size: 1.5rem;
-  }
-
-  section {
-    padding: 14px;
-  }
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.15);
 }
 
 small {
-  color: #777;
+  color: var(--muted);
   text-align: right;
+  font-size: 0.8rem;
+}
+
+button {
+  margin-top: 10px;
+  padding: 12px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+button:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 6px 14px rgba(108, 92, 231, 0.35);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.cancel-link {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+.cancel-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* ===== Errors ===== */
+.error {
+  background: #fff0f0;
+  color: var(--danger-dark);
+  border-left: 4px solid var(--danger);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+/* ===== Task list ===== */
+#task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 #task-list li {
@@ -113,39 +163,116 @@ small {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  padding: 14px 16px;
+  background: #fafaff;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--primary);
+  border-radius: 10px;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.delete-btn {
-  margin-top: 0;
-  padding: 6px 12px;
-  background: #e74c3c;
+#task-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(108, 92, 231, 0.15);
 }
 
-.delete-btn:hover {
-  background: #c0392b;
+#task-list li span {
+  word-break: break-word;
+  color: var(--muted);
 }
 
+#task-list li strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+/* ===== Action buttons ===== */
 .actions {
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-shrink: 0;
+}
+
+.edit-btn,
+.delete-btn {
+  margin: 0;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  /* ===== Fix action buttons ===== */
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.edit-btn,
+.delete-btn {
+  margin: 0;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 
 .edit-btn {
-  padding: 6px 12px;
-  background: #f39c12;
-  color: #fff;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 1rem;
+  background: #feca57;
+  color: #5b4a00;
 }
 
 .edit-btn:hover {
-  background: #d68910;
+  background: #f0b93a;
 }
 
-.cancel-link {
+.delete-btn {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background: #e55656;
+  box-shadow: none;
+}
+
+/* ===== Extra polish ===== */
+header h1::before {
+  content: "🐱 ";
+}
+
+header::after {
+  content: "Get things done, one task at a time";
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.list-title {
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.empty {
   text-align: center;
-  color: #777;
-  font-size: 0.9rem;
+  color: var(--muted);
+  padding: 20px 0;
+}
+
+#task-list li:nth-child(4n+1) { border-left-color: #6c5ce7; }
+#task-list li:nth-child(4n+2) { border-left-color: #00b894; }
+#task-list li:nth-child(4n+3) { border-left-color: #fdcb6e; }
+#task-list li:nth-child(4n+4) { border-left-color: #ff7675; }
+
+button[type="submit"]:not(.delete-btn) {
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
 }
