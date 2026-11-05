@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+$_SESSION['tasks'] = $_SESSION['tasks'] ?? [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $_SESSION['tasks'][] = [
+        $_POST['task_name'],
+        $_POST['task_description']
+    ];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +38,9 @@
 
     <section>
       <ul id="task-list">
-        <!-- backend will put the foreach loop here -->
+        <?php foreach ($_SESSION['tasks'] as $task): ?>
+          <li><strong><?= $task[0] ?></strong>: <?= $task[1] ?></li>
+        <?php endforeach; ?>
       </ul>
     </section>
   </main>
