@@ -2,12 +2,29 @@
 session_start();
 
 $_SESSION['tasks'] = $_SESSION['tasks'] ?? [];
+$errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $_SESSION['tasks'][] = [
-        $_POST['task_name'],
-        $_POST['task_description']
-    ];
+    $taskName = trim($_POST['task_name'] ?? '');
+    $taskDescription = trim($_POST['task_description'] ?? '');
+
+    if ($taskName === '') {
+        $errors[] = "Task Name cannot be empty.";
+    } elseif (strlen($taskName) < 3) {
+        $errors[] = "Task Name must be at least 3 characters long.";
+    }
+
+    if ($taskDescription === '') {
+        $errors[] = "Task Description is required.";
+    } elseif (strlen($taskDescription) > 255) {
+        $errors[] = "Task Description cannot exceed 255 characters.";
+    }
+
+    if (empty($errors)) {
+        $_SESSION['tasks'][] = [$taskName, $taskDescription];
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -25,6 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   <main>
     <section>
+      <?php foreach ($errors as $error): ?>
+        <p class="error"><?= htmlspecialchars($error) ?></p>
+      <?php endforeach; ?>
+
       <form method="POST">
         <label for="task_name">Task Name:</label>
         <input type="text" id="task_name" name="task_name" required>
@@ -39,7 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <section>
       <ul id="task-list">
         <?php foreach ($_SESSION['tasks'] as $task): ?>
-          <li><strong><?= $task[0] ?></strong>: <?= $task[1] ?></li>
+          <li>
+            <strong><?= htmlspecialchars($task[0], ENT_QUOTES, 'UTF-8') ?></strong>:
+            <?= htmlspecialchars($task[1], ENT_QUOTES, 'UTF-8') ?>
+          </li>
         <?php endforeach; ?>
       </ul>
     </section>
